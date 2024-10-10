@@ -1,22 +1,58 @@
 "use client";
 
+import api from "@/api/api";
+import Page from "@/components/Page/Page";
+import { Database } from "@/supabase/database.types";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 function NewRecruitPage() {
   const [title, setTitle] = useState("");
-  const [context, setContext] = useState("");
+  const [content, setContent] = useState("");
   const [sponserType, setSponserType] = useState("personal");
   const [donationType, setDonationType] = useState("talent");
   const [maxRecruits, setMaxRecruits] = useState(0);
   const [region, setRegion] = useState("");
+  const status = "recruiting";
+
+  const { mutate: createRecruit } = useMutation<
+    unknown,
+    Error,
+    Database["public"]["Tables"]["recruits"]["Insert"]
+  >({
+    mutationFn: (data) => api.recruits.createRecruit(data),
+    onSuccess: () => {
+      alert("추가되었습니다.");
+    },
+    onError: (e) => {
+      alert(e.message);
+    },
+  });
 
   const handleClickNewRecruit = () => {
-    console.log(title, context, sponserType, donationType, maxRecruits, region);
+    if (!title) return alert("제목을 입력해 주세요");
+    if (!content) return alert("내용을 입력해 주세요");
+    if (!sponserType) return alert("후원자 유형을 선택해 주세요");
+    if (!donationType) return alert("기부 유형을 입력해 주세요");
+    if (!maxRecruits) return alert("모집 인원을 입력헤주세요");
+    if (!region) return alert("지역을 입력헤주세요");
+
+    const data: Database["public"]["Tables"]["recruits"]["Insert"] = {
+      title,
+      content,
+      sponserType,
+      donationType,
+      maxRecruits,
+      region,
+      status,
+    };
+
+    createRecruit(data);
   };
 
   return (
-    <div>
-      <h1 className="mb-10">봉사원 모집글 작성</h1>
+    <Page>
+      <h1 className="mt-10">봉사원 모집글 작성</h1>
 
       <section className="flex flex-col gap-y-4">
         <div>
@@ -30,7 +66,7 @@ function NewRecruitPage() {
         <div>
           <span>내용</span>
           <input
-            onChange={(e) => setContext(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
             className="border border-black"
             type="text"
           />
@@ -85,7 +121,7 @@ function NewRecruitPage() {
           </button>
         </div>
       </section>
-    </div>
+    </Page>
   );
 }
 
