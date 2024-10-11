@@ -3,6 +3,7 @@
 import clientApi from "@/api/clientSide/api";
 import Page from "@/components/Page/Page";
 import { useQuery } from "@tanstack/react-query";
+import Reply from "./_components/Reply";
 
 interface RecruitDetailPageProps {
   searchParams: {
@@ -11,15 +12,19 @@ interface RecruitDetailPageProps {
 }
 
 function RecruitDetailPage({ searchParams }: RecruitDetailPageProps) {
+  const recruitId = searchParams.recruitId;
+
   const { data: recruitData } = useQuery({
-    queryKey: ["recruits", { searchParams }],
-    queryFn: () => clientApi.recruits.getRecruit(searchParams.recruitId),
+    queryKey: ["recruits", { recruitId }],
+    queryFn: () => clientApi.recruits.getRecruit(recruitId),
   });
 
   return (
     <Page width="lg">
       <h1>{recruitData?.title}</h1>
       <p>{recruitData?.content}</p>
+
+      <Reply recruitId={recruitId} />
     </Page>
   );
 }
