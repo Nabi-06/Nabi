@@ -1,6 +1,6 @@
 "use client";
 import clientApi from "@/api/clientSide/api";
-import { Database } from "@/supabase/database.types";
+import { RecruitsType } from "@/types/tables.type";
 import { useAuthStore } from "@/zustand/auth.store";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -28,6 +28,7 @@ dayjs.updateLocale("en", {
     yy: "%d년",
   },
 });
+
 function MyRecruits() {
   const userId = useAuthStore((state) => state.currentUserId);
 
@@ -36,8 +37,7 @@ function MyRecruits() {
     queryFn: () => clientApi.recruits.getSortedMyRecruits(userId!),
   });
 
-  const myRecruits =
-    myRecruitsData?.data as Database["public"]["Tables"]["recruits"]["Row"][];
+  const myRecruits = myRecruitsData?.data as RecruitsType["Row"][];
 
   return (
     <article className="grow bg-gray-300 rounded-lg">

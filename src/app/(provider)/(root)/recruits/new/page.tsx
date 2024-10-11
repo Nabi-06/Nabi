@@ -4,7 +4,7 @@ import clientApi from "@/api/clientSide/api";
 import ButtonGroup from "@/components/Button/ButtonGroup";
 import InputGroup from "@/components/Inputs/InputGroup";
 import { supabase } from "@/supabase/client";
-import { Database } from "@/supabase/database.types";
+import { RecruitsType } from "@/types/tables.type";
 import { useMutation } from "@tanstack/react-query";
 import { ComponentProps, FormEvent, useState } from "react";
 
@@ -40,7 +40,7 @@ function NewRecruitPage() {
   const { mutate: createRecruit } = useMutation<
     unknown,
     Error,
-    Database["public"]["Tables"]["recruits"]["Insert"]
+    RecruitsType["Insert"]
   >({
     mutationFn: (data) => clientApi.recruits.createRecruit(data),
     onSuccess: () => {
@@ -95,7 +95,7 @@ function NewRecruitPage() {
       }));
     }
 
-    const recruitData: Database["public"]["Tables"]["recruits"]["Insert"] = {
+    const recruitData: RecruitsType["Insert"] = {
       title,
       content,
       donationType,

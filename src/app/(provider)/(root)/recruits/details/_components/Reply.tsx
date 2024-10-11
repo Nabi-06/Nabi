@@ -3,8 +3,7 @@
 import clientApi from "@/api/clientSide/api";
 import Button from "@/components/Button/Button";
 import InputGroup from "@/components/Inputs/InputGroup";
-import { supabase } from "@/supabase/client";
-import { Database } from "@/supabase/database.types";
+import { ReplyType } from "@/types/tables.type";
 import { useAuthStore } from "@/zustand/auth.store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ComponentProps, FormEvent, useState } from "react";
@@ -27,9 +26,9 @@ type CustomFormEvent = FormEvent<HTMLFormElement> & {
 };
 
 function Reply({ recruitId }: ReplyProps) {
-  const [errMsgs, setErrMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
-
   const userId = useAuthStore((state) => state.currentUserId);
+
+  const [errMsgs, setErrMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
 
   //댓글 목록 가져오기
   const { data: replies } = useQuery({
@@ -39,9 +38,8 @@ function Reply({ recruitId }: ReplyProps) {
 
   //댓글 추가
   const { mutate: addReply } = useMutation({
-    mutationFn: async (
-      replyData: Database["public"]["Tables"]["replys"]["Insert"]
-    ) => await supabase.from("replys").insert(replyData),
+    mutationFn: (replyData: ReplyType["Insert"]) =>
+      clientApi.replies.addReply(replyData),
   });
 
   //자신이 이 모집글의 후원자인지 확인 (false일 시 후원대상자)
@@ -66,7 +64,7 @@ function Reply({ recruitId }: ReplyProps) {
 
     if (!content) return throwErrMsgs("content", "댓글 내용을 입력해 주세요");
 
-    const replyData: Database["public"]["Tables"]["replys"]["Insert"] = {
+    const replyData: ReplyType["Insert"] = {
       content,
       recipientId: userId!,
       recruitId,

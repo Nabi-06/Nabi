@@ -1,11 +1,9 @@
 import { supabase } from "@/supabase/client";
-import { Database } from "@/supabase/database.types";
+import { UserProfilesType } from "@/types/tables.type";
 
 const TABLE_PROFILES = "userProfiles";
 
-const insertProfile = async (
-  insertProfileData: Database["public"]["Tables"]["userProfiles"]["Insert"]
-) => {
+const insertProfile = async (insertProfileData: UserProfilesType["Insert"]) => {
   const { data, error } = await supabase
     .from(TABLE_PROFILES)
     .insert(insertProfileData);
@@ -23,7 +21,7 @@ const getProfileByUserId = async (userId: string) => {
     .single();
 
   if (error) throw new Error(error.message);
-  const profile: Database["public"]["Tables"]["userProfiles"]["Row"] = data;
+  const profile: UserProfilesType["Row"] = data;
   return profile;
 };
 

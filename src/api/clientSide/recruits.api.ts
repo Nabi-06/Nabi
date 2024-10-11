@@ -1,9 +1,7 @@
 import { supabase } from "@/supabase/client";
-import { Database } from "@/supabase/database.types";
+import { RecruitsType } from "@/types/tables.type";
 
-async function createRecruit(
-  data: Database["public"]["Tables"]["recruits"]["Insert"]
-) {
+async function createRecruit(data: RecruitsType["Insert"]) {
   const { data: recruitData, error } = await supabase
     .from("recruits")
     .insert(data);
@@ -27,7 +25,7 @@ const getRecruit = async (recruitId: string) => {
     .single();
   const recruit = response.data;
 
-  return recruit as Database["public"]["Tables"]["recruits"]["Row"];
+  return recruit as RecruitsType["Row"];
 };
 
 const getSortedMyRecruits = async (userId: string) => {

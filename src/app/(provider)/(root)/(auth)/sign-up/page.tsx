@@ -3,9 +3,9 @@ import clientApi from "@/api/clientSide/api";
 import ButtonGroup from "@/components/Button/ButtonGroup";
 import InputGroup from "@/components/Inputs/InputGroup";
 import Page from "@/components/Page/Page";
-import { Database } from "@/supabase/database.types";
 import { UserInfo } from "@/types/auth.types";
 import { Role } from "@/types/profiles.types";
+import { UserProfilesType } from "@/types/tables.type";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { ComponentProps, FormEvent, useState } from "react";
@@ -67,9 +67,8 @@ function SignUpPage({ searchParams: { role } }: SignUpPageProps) {
   });
 
   const { mutate: insertProfile } = useMutation({
-    mutationFn: (
-      insertProfileData: Database["public"]["Tables"]["userProfiles"]["Insert"]
-    ) => clientApi.profiles.insertProfile(insertProfileData),
+    mutationFn: (insertProfileData: UserProfilesType["Insert"]) =>
+      clientApi.profiles.insertProfile(insertProfileData),
     onSuccess: () => {
       router.replace("/");
     },

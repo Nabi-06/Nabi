@@ -1,4 +1,5 @@
 import { supabase } from "@/supabase/client";
+import { ReplyType } from "@/types/tables.type";
 
 const getReplies = async (recruitId: string) => {
   const response = await supabase
@@ -11,6 +12,10 @@ const getReplies = async (recruitId: string) => {
   return replies;
 };
 
-const repliesAPI = { getReplies };
+const addReply = async (replyData: ReplyType["Insert"]) => {
+  await supabase.from("replys").insert(replyData);
+};
+
+const repliesAPI = { getReplies, addReply };
 
 export default repliesAPI;
