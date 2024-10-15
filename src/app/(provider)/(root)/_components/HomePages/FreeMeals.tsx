@@ -24,9 +24,9 @@ function FreeMeals() {
       {freeMeals!.map((freeMeal) => {
         return (
           <li key={freeMeal.mealId}>
-            <article className="bg-white p-5 flex flex-col gap-y-2">
-              <div>
-                <span className="font-bold">
+            <article className="bg-white p-5 flex flex-col gap-y-2 rounded-md">
+              <div className="mb-5">
+                <span className="font-bold text-[15px]">
                   {freeMeal.userProfiles?.nickname}
                   <span className="font-normal">
                     님께서
@@ -54,10 +54,10 @@ function FreeMeals() {
                 </address>
               </div>
               <ButtonGroup
-                value="위치 보기"
+                value=" 매장 위치 보기"
                 intent="primary"
                 textIntent="primary"
-                className="w-full"
+                className="w-full mt-4 text-[13px]"
                 onClick={() =>
                   handleClickLinkToStoreMap(
                     freeMeal.storeDatas?.lat!,

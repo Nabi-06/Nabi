@@ -13,17 +13,24 @@ function HomePage({ searchParams: { page } }: HomePageProps) {
     <Page
       width="lg"
       isMain={false}
-      className="h-full flex items-center justify-between py-20"
+      className="h-full flex items-center justify-between py-20 mt-10"
     >
       <div className="grid grid-cols-4 gap-x-5 w-full">
         <FreeMeals />
         <div className="col-span-2">
           <Link
             href={"/recruits/new"}
-            className="w-full block bg-white text-center py-3 text-[15px]"
+            className="w-full rounded-md bg-white flex items-center justify-center py-4"
           >
-            글 작성
+            <div className="flex items-center gap-x-3">
+              <img
+                src="/icons/plus.png"
+                className="bg-[#EEEEEE] p-1 rounded-full"
+              />
+              <p className="text-[16px]">후원자 모집하기</p>
+            </div>
           </Link>
+
           <RecruitList />
         </div>
         <Users page={page} />

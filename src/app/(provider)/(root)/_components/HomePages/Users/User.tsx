@@ -34,14 +34,17 @@ function User({ user }: RecipientProps) {
         href={`/profiles?userId=${user.userId}`}
         className="flex items-center gap-x-2 "
       >
-        {user.bgImageUrl ? (
+        {user.profileImageUrl ? (
           <img
-            src={user.bgImageUrl}
+            src={user.profileImageUrl}
             alt="profile image"
             className="w-10 aspect-square bg-gray-500 rounded-lg"
           />
         ) : (
-          <div className="w-10 aspect-square bg-gray-500 rounded-lg" />
+          <img
+            className="w-10 aspect-square bg-[#F9F9F9] rounded-lg"
+            src="/icons/userIcon.png"
+          />
         )}
         <span>{user.nickname}</span>
       </Link>

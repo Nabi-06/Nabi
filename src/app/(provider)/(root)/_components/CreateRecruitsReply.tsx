@@ -1,29 +1,30 @@
 import clientApi from "@/api/clientSide/api";
-import ButtonGroup from "@/components/Button/ButtonGroup";
 import InputGroup from "@/components/Inputs/InputGroup";
 import { Database } from "@/supabase/database.types";
 import { CustomFormEvent } from "@/types/formEvent.types";
 import { useAuthStore } from "@/zustand/auth.store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ComponentProps, useState } from "react";
-
-interface InitialErrMsgs {
-  content: string | null;
-}
-const initialErrMsgs = {
-  content: null,
-};
 
 interface SubmitReplyForm {
   content: HTMLInputElement;
 }
 
+interface InitialErrMsgs {
+  content: string | null;
+}
+
+const initialErrMsgs = {
+  content: null,
+};
+
 type SubmitReplyFormEvent = CustomFormEvent<SubmitReplyForm>;
 
 function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
   const queryClient = useQueryClient();
-  const [errMsgs, setErrMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
   const recipientId = useAuthStore((state) => state.currentUserId);
+  const [errMsgs, setErrMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
+
   const { mutate: editReply } = useMutation<
     unknown,
     Error,
@@ -38,6 +39,11 @@ function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
     },
   });
 
+  const { data: profile } = useQuery({
+    queryKey: ["userProfiles", { recipientId }],
+    queryFn: () => clientApi.profiles.getProfileByUserId(recipientId!),
+  });
+
   if (!recipientId) return null;
 
   const throwErrMsgs = (type: string, message: string) => {
@@ -48,9 +54,12 @@ function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
     e: SubmitReplyFormEvent
   ) => {
     e.preventDefault();
+
+    setErrMsgs(initialErrMsgs);
+
     const content = e.target.content.value;
 
-    if (!content) return throwErrMsgs("content", "내용을 입력해주세요");
+    if (!content) return throwErrMsgs("content", "내용을 작성해주세요");
 
     const data = {
       content,
@@ -63,15 +72,41 @@ function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
   };
 
   return (
-    <div className="w-full border-b border-black pb-5 mb-5">
-      <form onSubmit={handleSubmitReplyForm}>
+    <div className="w-full pb-5 mb-5 flex gap-x-4">
+      {profile?.profileImageUrl ? (
+        <>
+          <img
+            className="rounded-full object-cover w-[46px] h-10"
+            src={profile?.profileImageUrl}
+          />
+        </>
+      ) : (
+        <>
+          <img
+            src="/icons/userIcon.png"
+            className="rounded-full object-cover  w-10 h-10"
+          />
+        </>
+      )}
+      <form
+        onSubmit={handleSubmitReplyForm}
+        className=" rounded-md flex items-start w-full"
+      >
         <InputGroup
-          label="댓글 남기기"
-          type="text"
+          wrapperClassName="w-full"
+          innerClassName="border-none bg-[#F9F9F9]"
+          inputClassName="text-[12px] bg-[#F9F9F9]"
+          placeholder="댓글을 입력해주세요"
           name="content"
           errorText={errMsgs.content}
         />
-        <ButtonGroup className="mt-2" value="등록" type="submit" />
+
+        <button type="submit" className="bg-[#F9F9F9] w-10 h-10">
+          <img
+            src="/icons/paperPlaneIcon.png"
+            className="object-cover w-4 h-4"
+          />
+        </button>
       </form>
     </div>
   );
