@@ -17,11 +17,10 @@ function Replies({ recruitId }: RepliesProps) {
   return replies ? (
     replies.length !== 0 ? (
       <>
-        <strong>댓글 목록</strong>
         <ReplyList replies={replies} />
       </>
     ) : (
-      <p className="text-black/30">댓글이 존재하지 않습니다</p>
+      <p className="text-black/30">아직 댓글이 없습니다.</p>
     )
   ) : null;
 }

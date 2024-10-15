@@ -47,13 +47,10 @@ function RecruitList() {
   }, [isLoading]);
 
   return (
-    <ul className="mt-5 w-full">
+    <ul className="mt-2 w-full">
       {recruitsData?.pages.map((recruits) =>
         recruits?.map((recruit) => (
-          <li
-            key={recruit.recruitId}
-            className="bg-white mb-2 p-10 rounded-md relative"
-          >
+          <li key={recruit.recruitId} className="mb-4 relative">
             <RecruitDetails recruit={recruit} />
           </li>
         ))

@@ -1,4 +1,5 @@
 import { Tables } from "@/supabase/database.types";
+import Reply from "./Reply";
 
 type ReplyResponse = (Tables<"replies"> & {
   userProfiles: Pick<Tables<"userProfiles">, "nickname"> | null;
@@ -9,9 +10,7 @@ function ReplyList({ replies }: { replies: ReplyResponse }) {
     <ul className="mt-5">
       {replies.map((reply) => (
         <li key={reply.replyId}>
-          <p>
-            {reply.userProfiles?.nickname} : {reply.content}
-          </p>
+          <Reply reply={reply} />
         </li>
       ))}
     </ul>

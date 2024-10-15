@@ -1,4 +1,6 @@
 import Page from "@/components/Page/Page";
+import plusIcon from "@/public/icons/plusIcon.png";
+import Image from "next/image";
 import Link from "next/link";
 import FreeMeals from "./_components/HomePages/FreeMeals";
 import RecruitList from "./_components/HomePages/Recruits/RecruitList";
@@ -20,9 +22,16 @@ function HomePage({ searchParams: { page } }: HomePageProps) {
         <div className="col-span-2">
           <Link
             href={"/recruits/new"}
-            className="w-full block bg-white text-center py-3 text-[15px]"
+            className="w-full rounded-md bg-white flex items-center justify-center py-4"
           >
-            글 작성
+            <div className="flex items-center gap-x-3">
+              <Image
+                alt="pulsIcon"
+                src={plusIcon}
+                className="bg-[#EEEEEE] p-1 rounded-full"
+              />
+              <p className="text-[16px]">후원자 모집하기</p>
+            </div>
           </Link>
           <RecruitList />
         </div>
