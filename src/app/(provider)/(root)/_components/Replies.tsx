@@ -11,7 +11,7 @@ type RepliesProps = {
 function Replies({ recruitId }: RepliesProps) {
   const { data: replies } = useQuery({
     queryKey: ["replies", { recruitId }],
-    queryFn: () => clientApi.reply.getRepliesByRecruitId(recruitId),
+    queryFn: () => clientApi.replies.getRepliesByRecruitId(recruitId),
   });
 
   return replies ? (

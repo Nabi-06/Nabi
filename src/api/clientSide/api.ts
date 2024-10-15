@@ -5,7 +5,6 @@ import profilesAPI from "./profiles.api";
 import recruitsAPI from "./recruits.api";
 import regularSponsorShipAPI from "./regularSponsorShip.api";
 import repliesAPI from "./replies.api";
-import replyAPI from "./reply.api";
 import roomsAPI from "./rooms.api";
 import sponsorMeetsAPI from "./sponsorMeets.api";
 import storageAPI from "./storage.api";
@@ -23,7 +22,6 @@ const clientApi = {
   freeMeals: freeMealsAPI,
   rooms: roomsAPI,
   chats: chatsAPI,
-  reply: replyAPI,
   replies: repliesAPI,
   sponsorMeets: sponsorMeetsAPI,
 };

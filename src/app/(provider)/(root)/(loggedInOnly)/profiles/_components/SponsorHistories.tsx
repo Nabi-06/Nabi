@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { useEffect, useRef } from "react";
+import CreateRecruitsReply from "../../../_components/CreateRecruitsReply";
 import Replies from "../../../_components/Replies";
 
 dayjs.extend(relativeTime);
@@ -81,7 +82,7 @@ function SponsorHistories({ userId }: SponsorHistoriesProps) {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [isLoading]);
+  }, [isLoading, fetchNextPage, hasNextPage]);
 
   return (
     <div>
@@ -93,6 +94,8 @@ function SponsorHistories({ userId }: SponsorHistoriesProps) {
                 <strong>{recruit.title}</strong>
                 <p>{recruit.content}</p>
                 <p className="mb-4">{dayjs(recruit.createdAt).fromNow()}</p>
+
+                <CreateRecruitsReply recruitId={recruit.recruitId} />
                 <Replies recruitId={recruit.recruitId} />
               </div>
             </li>

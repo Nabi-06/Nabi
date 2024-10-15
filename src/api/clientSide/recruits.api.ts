@@ -47,7 +47,6 @@ const getSortedMyRecruits = async (userId: string) => {
       "*, sponsorMeets(isSponsor, userId, isApproved, userProfiles(nickname))"
     )
     .eq("authorId", userId)
-    .eq("sponsorMeets.isApproved", false)
     .order("createdAt", { ascending: false });
   const recruits = response.data;
 

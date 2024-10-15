@@ -53,10 +53,22 @@ const approvedUser = async (userId: string) => {
     .eq("userId", userId);
 };
 
+const getRecipients = async (recruitId: string) => {
+  const response = await supabase
+    .from("sponsorMeets")
+    .select("userId")
+    .eq("recruitId", recruitId)
+    .eq("isApproved", true)
+    .eq("isSponsor", false);
+  const data = response.data;
+  return data;
+};
+
 const sponsorMeetsAPI = {
   getRecruitIdByUserId,
   getRecentlySponsorship,
   approvedUser,
+  getRecipients,
 };
 
 export default sponsorMeetsAPI;

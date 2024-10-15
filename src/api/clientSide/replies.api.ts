@@ -4,7 +4,7 @@ import { Database } from "@/supabase/database.types";
 const getRepliesByRecruitId = async (recruitId: string) => {
   const response = await supabase
     .from("replies")
-    .select("*")
+    .select("*, userProfiles(nickname)")
     .eq("recruitId", recruitId);
   const replies = response.data;
 
@@ -18,6 +18,9 @@ const createReply = async (
   if (error) throw new Error(error.message);
 };
 
-const repliesAPI = { getRepliesByRecruitId, createReply };
+const repliesAPI = {
+  getRepliesByRecruitId,
+  createReply,
+};
 
 export default repliesAPI;

@@ -13,6 +13,7 @@ interface ProfileSideBarProps {
 function ProfileSideBar({ profile }: ProfileSideBarProps) {
   const queryClient = useQueryClient();
   const currentUserId = useAuthStore((state) => state.currentUserId);
+
   // 후원자가 본인 프로필을 봤을 때 모집글 불러오기
   const { data: myRecruits } = useQuery({
     queryKey: ["recruits", { userId: profile.userId }],
@@ -50,53 +51,99 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
           // 후원자 본인 프로필
           <>
             <strong>모집글 목록</strong>
-            <ul className="flex flex-col gap-y-4 items-center ">
+            <ul className="flex flex-col gap-y-4 text-start items-center ">
               {myRecruits?.map((recruit) => (
                 <li className="w-56 bg-yellow-300 " key={recruit.recruitId}>
                   <p>{recruit.title}</p>
                   <p>{recruit.content}</p>
                   <br />
-                  {recruit.sponsorMeets.some((user) => user.isSponsor) && (
-                    <>
-                      <strong>신청한 후원자 목록</strong>
-                      <ul>
-                        {recruit.sponsorMeets
-                          .filter((user) => user.isSponsor)
-                          .map((user) => (
-                            <li className="grid grid-cols-2" key={user.userId}>
-                              <p>{user.userProfiles?.nickname}</p>
-                              <Button
-                                className="px-0 py-0 border-none bg-black rounded-sm text-white text-sm"
-                                onClick={() => handleClickApproved(user.userId)}
-                              >
-                                수락하기
-                              </Button>
-                            </li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
+                  {recruit.sponsorMeets.some((user) => user.isSponsor) &&
+                    recruit.maxSponsorRecruits >=
+                      recruit.sponsorMeets.filter(
+                        (user) => user.isSponsor && user.isApproved
+                      ).length && (
+                      <div className="text-center">
+                        <strong>
+                          모집된 후원자 목록 (
+                          {
+                            recruit.sponsorMeets.filter(
+                              (user) => user.isSponsor && user.isApproved
+                            ).length
+                          }
+                          /{recruit.maxSponsorRecruits})
+                        </strong>
+                        <ul>
+                          {recruit.maxSponsorRecruits >
+                            recruit.sponsorMeets.filter(
+                              (user) => user.isSponsor && user.isApproved
+                            ).length &&
+                            recruit.sponsorMeets
+                              .filter(
+                                (user) => user.isSponsor && !user.isApproved
+                              )
+                              .map((user) => (
+                                <li
+                                  className="grid grid-cols-2"
+                                  key={user.userId}
+                                >
+                                  <p>{user.userProfiles?.nickname}</p>
+                                  <Button
+                                    className="px-0 py-0 border-none bg-black rounded-sm text-white text-sm"
+                                    onClick={() =>
+                                      handleClickApproved(user.userId)
+                                    }
+                                  >
+                                    수락하기
+                                  </Button>
+                                </li>
+                              ))}
+                        </ul>
+                      </div>
+                    )}
                   <br />
-                  {recruit.sponsorMeets.some((user) => !user.isSponsor) && (
-                    <>
-                      <strong>신청한 후원아동 목록</strong>
-                      <ul>
-                        {recruit.sponsorMeets
-                          .filter((user) => !user.isSponsor)
-                          .map((user) => (
-                            <li className="grid grid-cols-2" key={user.userId}>
-                              <p>{user.userProfiles?.nickname}</p>
-                              <Button
-                                className="px-0 py-0 border-none bg-black rounded-sm text-white text-sm"
-                                onClick={() => handleClickApproved(user.userId)}
-                              >
-                                수락하기
-                              </Button>
-                            </li>
-                          ))}
-                      </ul>
-                    </>
-                  )}
+                  {recruit.sponsorMeets.some((user) => !user.isSponsor) &&
+                    recruit.maxRecipientRecruits >=
+                      recruit.sponsorMeets.filter(
+                        (user) => !user.isSponsor && user.isApproved
+                      ).length && (
+                      <div className="text-center">
+                        <strong>
+                          모집된 아동 목록(
+                          {
+                            recruit.sponsorMeets.filter(
+                              (user) => !user.isSponsor && user.isApproved
+                            ).length
+                          }
+                          /{recruit.maxSponsorRecruits})
+                        </strong>
+                        <ul>
+                          {recruit.maxSponsorRecruits >
+                            recruit.sponsorMeets.filter(
+                              (user) => !user.isSponsor && user.isApproved
+                            ).length &&
+                            recruit.sponsorMeets
+                              .filter(
+                                (user) => !user.isSponsor && !user.isApproved
+                              )
+                              .map((user) => (
+                                <li
+                                  className="grid grid-cols-2"
+                                  key={user.userId}
+                                >
+                                  <p>{user.userProfiles?.nickname}</p>
+                                  <Button
+                                    className="px-0 py-0 border-none bg-black rounded-sm text-white text-sm"
+                                    onClick={() =>
+                                      handleClickApproved(user.userId)
+                                    }
+                                  >
+                                    수락하기
+                                  </Button>
+                                </li>
+                              ))}
+                        </ul>
+                      </div>
+                    )}
                 </li>
               ))}
             </ul>

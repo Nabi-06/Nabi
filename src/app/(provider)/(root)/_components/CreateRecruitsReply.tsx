@@ -1,3 +1,4 @@
+"use client";
 import clientApi from "@/api/clientSide/api";
 import InputGroup from "@/components/Inputs/InputGroup";
 import { Database } from "@/supabase/database.types";
@@ -23,7 +24,19 @@ type SubmitReplyFormEvent = CustomFormEvent<SubmitReplyForm>;
 function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
   const queryClient = useQueryClient();
   const recipientId = useAuthStore((state) => state.currentUserId);
+
+  const currentUserId = useAuthStore((state) => state.currentUserId);
   const [errMsgs, setErrMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
+
+  const { data: recipients } = useQuery({
+    queryKey: ["sponsorMeets", { recruitId }],
+    queryFn: () => clientApi.sponsorMeets.getRecipients(recruitId),
+  });
+
+  // sponsorMeets에 recruitId와 자신의 userId를 넣어 isApproved가 true이고,
+  // isSponsor가 false일 때만 댓글 작성
+
+  // 만들기
 
   const { mutate: editReply } = useMutation<
     unknown,
@@ -71,7 +84,9 @@ function CreateRecruitsReply({ recruitId }: { recruitId: string }) {
     e.target.content.value = "";
   };
 
-  return (
+
+  if (recipients?.some((recipient) => recipient.userId === currentUserId))
+   return (
     <div className="w-full pb-5 mb-5 flex gap-x-4">
       {profile?.profileImageUrl ? (
         <>
