@@ -12,7 +12,7 @@ function EditRecruitPage({ params: { recruitId } }: EditRecruitPageProps) {
   return (
     <Page width="lg" isMain={false} className="h-full py-20">
       <div className="bg-white p-10 rounded-md">
-        <h1 className="mb-10 text-3xl font-bold">봉사원 모집글 수정</h1>
+        <h1 className="mb-10 text-3xl font-bold">봉사활동 구인 글 수정하기</h1>
         <EditRecruitForm recruitId={recruitId} />
       </div>
     </Page>

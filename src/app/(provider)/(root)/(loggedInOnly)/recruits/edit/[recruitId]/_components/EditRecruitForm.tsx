@@ -152,10 +152,21 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
   return (
     <form
       onSubmit={handleSubmitRecruitEditForm}
-      className="flex flex-col gap-y-2"
+      className="flex flex-col gap-y-4"
     >
-      <div className="flex gap-x-2">
+      <InputGroup
+        intent="comment"
+        defaultValue={recruit?.title}
+        type="text"
+        label="제목"
+        name="title"
+        errorText={errMsgs.title}
+        wrapperClassName="w-full"
+      />
+      <div className="flex gap-x-2 w-full">
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           defaultValue={recruit?.maxSponsorRecruits}
           type="text"
           label="봉사자 모집 인원"
@@ -163,6 +174,8 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
           errorText={errMsgs.maxSponsorRecruits}
         />
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           defaultValue={recruit?.maxRecipientRecruits}
           type="text"
           label="후원 아동 모집 인원"
@@ -170,8 +183,10 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
           errorText={errMsgs.maxRecipientRecruits}
         />
       </div>
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 w-full">
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           label="모집 마감 날짜"
           type="date"
           name="deadLineDate"
@@ -180,6 +195,8 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
           min={today}
         />
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           label="봉사 활동 날짜"
           type="date"
           name="volunteeringDate"
@@ -187,29 +204,23 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
           min={today}
           defaultValue={dayjs(recruit?.volunteeringDate).format("YYYY-MM-DD")}
         />
+        <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
+          defaultValue={recruit?.region}
+          type="text"
+          label="지역"
+          name="region"
+          errorText={errMsgs.region}
+        />
       </div>
 
-      <InputGroup
-        defaultValue={recruit?.region}
-        type="text"
-        label="지역"
-        name="region"
-        errorText={errMsgs.region}
-      />
-
-      <InputGroup
-        defaultValue={recruit?.title}
-        type="text"
-        label="제목"
-        name="title"
-        errorText={errMsgs.title}
-      />
       <div>
         <p className="mb-1">내용</p>
         <textarea
           name="content"
           defaultValue={recruit?.content}
-          className={`border-black border resize-none w-full h-60 p-3 ${
+          className={`resize-none w-full h-60 p-3 bg-[#f5f5f5] ${
             errMsgs.content && "border-red-500"
           }`}
         />
@@ -218,7 +229,14 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
         )}
       </div>
 
-      <ButtonGroup type="submit" value="등록하기" size="md" className="mt-4" />
+      <ButtonGroup
+        intent="primary"
+        textIntent="primary"
+        type="submit"
+        value="수정하기"
+        size="md"
+        className="mt-4 ml-auto"
+      />
     </form>
   );
 }

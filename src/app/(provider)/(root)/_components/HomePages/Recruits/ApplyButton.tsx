@@ -61,7 +61,9 @@ function ApplyButton({ recruitId }: ApplyButtonProps) {
         />
       ) : (
         <ButtonGroup
-          className="ml-auto bg-[#DDDDDD] text-[#999999]"
+          intent="disabled"
+          textIntent="black"
+          className="ml-auto"
           value="신청됨"
           disabled
         />

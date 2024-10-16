@@ -141,23 +141,41 @@ function NewRecruitForm() {
   };
 
   return (
-    <form onSubmit={handleSubmitRecruitForm} className="flex flex-col gap-y-2">
-      <div className="flex gap-x-2">
+    <form
+      onSubmit={handleSubmitRecruitForm}
+      className="flex flex-col gap-y-4 mt-10"
+    >
+      <InputGroup
+        intent="comment"
+        type="text"
+        label="제목"
+        name="title"
+        errorText={errMsgs.title}
+        wrapperClassName="w-full"
+      />
+      <div className="flex gap-x-2 w-full">
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           type="number"
           label="봉사자 모집 인원"
           name="maxSponsorRecruits"
           errorText={errMsgs.maxSponsorRecruits}
         />
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           type="number"
           label="후원 아동 모집 인원"
           name="maxRecipientRecruits"
           errorText={errMsgs.maxRecipientRecruits}
         />
       </div>
-      <div className="flex gap-x-2">
+
+      <div className="flex gap-x-2 w-full">
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           label="모집 마감 날짜"
           type="date"
           name="deadLineDate"
@@ -165,32 +183,29 @@ function NewRecruitForm() {
           min={today}
         />
         <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
           label="봉사 활동 날짜"
           type="date"
           name="volunteeringDate"
           errorText={errMsgs.volunteeringDate}
           min={today}
         />
+        <InputGroup
+          wrapperClassName="w-full"
+          intent="comment"
+          type="text"
+          label="지역"
+          name="region"
+          errorText={errMsgs.region}
+        />
       </div>
 
-      <InputGroup
-        type="text"
-        label="지역"
-        name="region"
-        errorText={errMsgs.region}
-      />
-
-      <InputGroup
-        type="text"
-        label="제목"
-        name="title"
-        errorText={errMsgs.title}
-      />
       <div>
         <p className="mb-1">내용</p>
         <textarea
           name="content"
-          className={`border-black border resize-none w-full h-60 p-3 ${
+          className={`resize-none w-full h-60 p-3 bg-[#f5f5f5] ${
             errMsgs.content && "border-red-500"
           }`}
         />
@@ -199,7 +214,12 @@ function NewRecruitForm() {
         )}
       </div>
 
-      <ButtonGroup value="등록하기" size="md" className="mt-4" />
+      <ButtonGroup
+        intent="primary"
+        textIntent="primary"
+        value="등록하기"
+        className="mt-4 ml-auto"
+      />
     </form>
   );
 }
