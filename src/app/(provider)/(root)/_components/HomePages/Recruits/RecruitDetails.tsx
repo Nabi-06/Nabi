@@ -41,18 +41,18 @@ interface RecruitDetailsProps {
 }
 
 function RecruitDetails({ recruit }: RecruitDetailsProps) {
-  const userId = useAuthStore((state) => state.currentUserId);
   const authorId = recruit.authorId;
   const recruitId = recruit.recruitId;
-
-  const { data: profile } = useQuery({
-    queryKey: ["userProfiles", { authorId }],
-    queryFn: () => clientApi.profiles.getProfileByUserId(authorId!),
-  });
+  const userId = useAuthStore((state) => state.currentUserId);
 
   const { data: userProfile } = useQuery({
     queryKey: ["userProfiles", { userId }],
     queryFn: () => clientApi.profiles.getProfileByUserId(userId!),
+  });
+
+  const { data: profile } = useQuery({
+    queryKey: ["userProfiles", { authorId }],
+    queryFn: () => clientApi.profiles.getProfileByUserId(authorId!),
   });
 
   const { data: replies } = useQuery({
@@ -63,7 +63,7 @@ function RecruitDetails({ recruit }: RecruitDetailsProps) {
   return (
     <div className="bg-white rounded-md p-7">
       <div className="flex justify-between gap-x-3">
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-3 flex-shrink-0">
           {profile?.profileImageUrl ? (
             <>
               <img

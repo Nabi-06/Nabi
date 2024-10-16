@@ -1,3 +1,4 @@
+import clientApi from "@/api/clientSide/api";
 import Page from "@/components/Page/Page";
 import plusIcon from "@/public/icons/plusIcon.png";
 import Image from "next/image";
@@ -10,7 +11,10 @@ interface HomePageProps {
   searchParams: { page: string };
 }
 
-function HomePage({ searchParams: { page } }: HomePageProps) {
+async function HomePage({ searchParams: { page } }: HomePageProps) {
+  const initialRecruits =
+    (await clientApi.recruits.getInfiniteRecruits(0)) || null;
+
   return (
     <Page
       width="lg"
@@ -33,7 +37,7 @@ function HomePage({ searchParams: { page } }: HomePageProps) {
               <p className="text-[16px]">후원자 모집하기</p>
             </div>
           </Link>
-          <RecruitList />
+          <RecruitList initialRecruits={initialRecruits} />
         </div>
         <Users page={page} />
       </div>

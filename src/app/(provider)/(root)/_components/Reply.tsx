@@ -42,22 +42,21 @@ function Reply({ reply }: ReplyProps) {
 
   return (
     <div className="flex gap-x-4 mb-3 w-full">
-      {profile?.profileImageUrl ? (
-        <>
+      <div className="flex-shrink-0">
+        {profile?.profileImageUrl ? (
           <img
-            className="rounded-full object-cover  w-[46px] h-10"
+            className="rounded-full object-cover w-10 h-10"
             src={profile?.profileImageUrl}
+            alt="User profile"
           />
-        </>
-      ) : (
-        <>
+        ) : (
           <Image
             alt="userIcon"
             src={userIcon}
-            className="rounded-full object-cover  w-10 h-10"
+            className="rounded-full object-cover w-10 h-10"
           />
-        </>
-      )}
+        )}
+      </div>
       <div className="bg-[#F9F9F9] p-3 rounded-md w-full">
         <div className="flex justify-between">
           <p className="font-bold text-[14px] mb-2">{profile?.nickname}</p>
