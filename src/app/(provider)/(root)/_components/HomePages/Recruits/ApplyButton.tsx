@@ -13,6 +13,7 @@ interface ApplyButtonProps {
 function ApplyButton({ recruitId }: ApplyButtonProps) {
   const queryClient = useQueryClient();
   const userId = useAuthStore((state) => state.currentUserId);
+  const roleType = useAuthStore((state) => state.roleType);
 
   const { data } = useQuery({
     queryKey: ["sponsorMeets", userId],
@@ -56,7 +57,7 @@ function ApplyButton({ recruitId }: ApplyButtonProps) {
           intent="primary"
           textIntent="primary"
           className="ml-auto"
-          value="신청하기"
+          value={roleType === "sponsor" ? "신청하기" : "후원 요청하기"}
           onClick={handleClickApplyButton}
         />
       ) : (
