@@ -63,7 +63,7 @@ function ApplyButton({ recruitId }: ApplyButtonProps) {
       ) : (
         <ButtonGroup
           className="ml-auto bg-[#DDDDDD] text-[#999999]"
-          value="신청됨"
+          value={roleType === "sponsor" ? "신청됨" : "요청됨"}
           disabled
         />
       )}
