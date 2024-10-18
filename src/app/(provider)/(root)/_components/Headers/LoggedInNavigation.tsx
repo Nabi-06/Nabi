@@ -43,17 +43,6 @@ function LoggedInNavigation({ userId }: LoggedInNavigationProps) {
 
   return (
     <>
-      <li className="w-10">
-        <Link href="/free-meals/map">
-          <Image
-            width={150}
-            height={150}
-            className="w-10 aspect-square rounded-lg"
-            src="https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/LinkToMap.png?t=2024-10-15T21%3A06%3A46.454Z"
-            alt="link to free-meals store map"
-          />
-        </Link>
-      </li>
       {isStoreOwner && (
         <li className="w-10">
           <button onClick={handleClickCreateFreeMeal}>

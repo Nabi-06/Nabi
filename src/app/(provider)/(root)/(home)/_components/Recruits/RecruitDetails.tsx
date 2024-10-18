@@ -31,7 +31,7 @@ function RecruitDetails({ recruit }: RecruitDetailsProps) {
         authorId={recruit.authorId}
         recruitId={recruit.recruitId}
       />
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-4">
         <Link
           href={`/profiles?userId=${recruit.authorId}`}
           className="flex items-center gap-x-5 "

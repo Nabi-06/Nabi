@@ -24,7 +24,7 @@ function Sponsors() {
           src="https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/Crown.png?t=2024-10-15T23%3A41%3A11.949Z"
           alt="hot icon"
         />
-        명예의 전당
+        활동률이 높은 후원자
       </h2>
       <ul className="grid grid-cols-1 grid-rows-5 gap-y-2">
         {sponsors!.slice(0, 5).map((sponsor) => {

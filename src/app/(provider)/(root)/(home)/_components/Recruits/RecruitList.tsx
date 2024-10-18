@@ -71,7 +71,7 @@ function RecruitList({ initialRecruitList, userId }: RecruitListProps) {
   }, [isLoading, hasNextPage, fetchNextPage]);
 
   return (
-    <ul className="mt-5 w-full flex flex-col gap-y-4">
+    <ul className="w-full flex flex-col gap-y-4">
       {recruitsData!.pages[0]!.map((recruit) => {
         return (
           <li

@@ -22,7 +22,9 @@ function Replies({ replies }: RepliesProps) {
               src="https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/Comments.png"
               alt="reply icon"
             />
-            <span className="font-light text-xs">댓글 ({replies?.length})</span>
+            <span className="font-light text-xs">
+              감사인사 ({replies?.length})
+            </span>
           </div>
           <div className="flex gap-x-2 items-center">
             <Image
@@ -40,7 +42,7 @@ function Replies({ replies }: RepliesProps) {
           replies.length !== 0 ? (
             <ReplyList replies={replies} />
           ) : (
-            <p className="text-black/30 mt-5">댓글이 존재하지 않습니다</p>
+            <p className="text-black/30 mt-5">감사인사가 아직 없습니다</p>
           )
         ) : null}
       </article>
