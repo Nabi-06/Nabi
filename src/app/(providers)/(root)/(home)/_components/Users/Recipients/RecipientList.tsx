@@ -24,7 +24,7 @@ function RecipientList({ page }: RecipientListProps) {
     <>
       {isLoading && (
         <>
-          <div className="w-40 h-6 m-auto bg-gray-200 " />
+          <div className="w-40 h-6 m-auto mt-[10px] bg-gray-200" />
           <ul className="-mt-2 grid grid-cols-1 grid-rows-5 gap-y-2">
             {Array(5)
               .fill(null)

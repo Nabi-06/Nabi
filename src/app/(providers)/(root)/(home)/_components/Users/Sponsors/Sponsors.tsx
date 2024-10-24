@@ -14,23 +14,25 @@ function Sponsors() {
 
   if (isLoading)
     return (
-      <article className="bg-white h-[320px] px-6 pt-5 flex flex-col gap-y-3 rounded-lg shadow-sm">
-        <div className="w-40 h-6 m-auto bg-gray-200" />
-        <ul className="grid grid-cols-1 grid-rows-5 gap-y-2">
-          {Array(5)
-            .fill(null)
-            .map((_, index) => (
-              <li key={index} className="flex gap-x-4 items-center">
-                <div className="w-10 h-10 rounded-full bg-gray-200"></div>
-                <div className="w-40 h-6 bg-gray-200"></div>
-              </li>
-            ))}
-        </ul>
+      <article className="bg-white h-[360px] px-6 pt-5 flex flex-col gap-y-5 rounded-lg shadow-sm">
+        <>
+          <div className="w-40 h-6 mt-[10px] ml-[32.5px] mb-[42px] bg-gray-200" />
+          <ul className="-mt-10 grid grid-cols-1 grid-rows-5 gap-y-2">
+            {Array(5)
+              .fill(null)
+              .map((_, index) => (
+                <li key={index} className="flex gap-x-4 items-center">
+                  <div className="w-10 h-10 rounded-full bg-gray-200"></div>
+                  <div className="w-40 h-6 bg-gray-200"></div>
+                </li>
+              ))}
+          </ul>
+        </>
       </article>
     );
 
   return (
-    <article className="bg-white h-[320px] px-6 pt-5 flex flex-col gap-y-5 rounded-lg shadow-sm">
+    <article className="bg-white h-[360px] px-6 pt-5 flex flex-col gap-y-5 rounded-lg shadow-sm">
       <h2 className="flex items-center gap-x-2 text-center mx-auto font-semibold">
         <Image
           width={100}
