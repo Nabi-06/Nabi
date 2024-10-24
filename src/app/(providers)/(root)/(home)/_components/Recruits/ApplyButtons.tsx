@@ -10,16 +10,24 @@ interface ApplyButtonsProps {
 }
 function ApplyButtons({ recruit }: ApplyButtonsProps) {
   const currentUser = useAuthStore((state) => state.currentUser);
-  return currentUser?.role === "recipient" ? (
-    <ApplyToRecipientButton
-      recruitId={recruit.recruitId}
-      authorId={recruit.authorId}
-    />
-  ) : (
-    <ApplyToSponsorButton
-      recruitId={recruit.recruitId}
-      authorId={recruit.authorId}
-    />
+
+  return (
+    <>
+      {!currentUser && (
+        <div className="w-44 h-8 absolute right-10 z-10 bg-gray-200 ml-auto"></div>
+      )}
+      {currentUser?.role === "recipient" ? (
+        <ApplyToRecipientButton
+          recruitId={recruit.recruitId}
+          authorId={recruit.authorId}
+        />
+      ) : (
+        <ApplyToSponsorButton
+          recruitId={recruit.recruitId}
+          authorId={recruit.authorId}
+        />
+      )}
+    </>
   );
 }
 
