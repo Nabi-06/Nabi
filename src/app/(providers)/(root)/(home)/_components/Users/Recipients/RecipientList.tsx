@@ -7,21 +7,22 @@ interface RecipientListProps {
 }
 
 function RecipientList({ page }: RecipientListProps) {
-  const { data: recipients, isFetching } = useQuery({
-    initialData: [],
+  const { data: recipients, isLoading } = useQuery({
     queryKey: ["userProfiles", { page }],
     queryFn: () =>
       clientApi.profiles.getProfilesFilterByRoleAndSponsorShipCount(
         "recipient"
       ),
+    refetchOnMount: true,
   });
 
   const startNum = page === 1 ? 0 : (page - 1) * 5;
   const endNum = page === 1 ? 5 : page * 5;
 
+  console.log(isLoading);
   return (
     <>
-      {isFetching && (
+      {isLoading && (
         <ul className="grid grid-cols-1 grid-rows-5 gap-y-2">
           {Array(5)
             .fill(null)
