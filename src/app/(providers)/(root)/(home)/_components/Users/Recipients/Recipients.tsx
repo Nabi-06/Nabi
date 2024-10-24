@@ -23,6 +23,7 @@ function Recipients({ page }: RecipientsProps) {
         />
         도움이 필요한 아이들
       </h2>
+
       <RecipientList page={page} />
       <Pagination page={page} />
     </article>

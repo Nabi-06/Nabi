@@ -7,7 +7,7 @@ interface RecipientListProps {
 }
 
 function RecipientList({ page }: RecipientListProps) {
-  const { data: recipients } = useQuery({
+  const { data: recipients, isFetching } = useQuery({
     initialData: [],
     queryKey: ["userProfiles", { page }],
     queryFn: () =>
@@ -21,6 +21,18 @@ function RecipientList({ page }: RecipientListProps) {
 
   return (
     <>
+      {isFetching && (
+        <ul className="grid grid-cols-1 grid-rows-5 gap-y-2">
+          {Array(5)
+            .fill(null)
+            .map((_, index) => (
+              <li key={index} className="flex gap-x-4 items-center">
+                <div className="w-10 h-10 rounded-full bg-gray-200"></div>
+                <div className="w-40 h-6 bg-gray-200"></div>
+              </li>
+            ))}
+        </ul>
+      )}
       {recipients && (
         <ul className="grid grid-cols-1 grid-rows-5 gap-y-2">
           {recipients?.slice(startNum, endNum).map((recipient) => {
