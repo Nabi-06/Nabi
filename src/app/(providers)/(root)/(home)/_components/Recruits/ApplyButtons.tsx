@@ -14,7 +14,7 @@ function ApplyButtons({ recruit }: ApplyButtonsProps) {
   return (
     <>
       {!currentUser && (
-        <div className="w-44 h-8 absolute right-10 z-10 bg-gray-200 ml-auto"></div>
+        <div className="w-[165px] h-8 absolute right-10 z-10 bg-gray-200 ml-auto"></div>
       )}
       {currentUser?.role === "recipient" ? (
         <ApplyToRecipientButton
