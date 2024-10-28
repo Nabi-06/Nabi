@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase/client";
 import { Database, Tables } from "@/supabase/database.types";
+import { WithProfiles } from "@/types/profiles.types";
 
 const getRecruitIdByUserId = async (userId: string) => {
   const response = await supabase
@@ -29,20 +30,13 @@ const getRecentlyRecipients = async (sponsorId: string) => {
     .returns<
       (Tables<"sponsorMeets"> & {
         recruits: Tables<"recruits"> & {
-          recipientMeets: (Tables<"recipientMeets"> & {
-            userProfiles: Tables<"userProfiles">;
-          })[];
+          recipientMeets: WithProfiles<Tables<"recipientMeets">>[];
         };
       })[]
     >();
 
   if (error) throw new Error(error.message);
 
-  // const recipients = recentlyRecipientsData
-  //   .flatMap((recruitsData) => recruitsData.recruits)
-  //   .map((recipientData) => recipientData?.recipientMeets);
-
-  // console.log("recentlyRecipientsData: ", recentlyRecipientsData);
   return recentlyRecipientsData;
 };
 

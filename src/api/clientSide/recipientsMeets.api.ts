@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase/client";
 import { Database, Tables } from "@/supabase/database.types";
+import { WithProfiles } from "@/types/profiles.types";
 
 const getRecentlySponsors = async (userId: string) => {
   const query = "*, recruits(*, sponsorMeets(*, userProfiles(*)))";
@@ -15,9 +16,7 @@ const getRecentlySponsors = async (userId: string) => {
     .returns<
       (Tables<"recipientMeets"> & {
         recruits: Tables<"recruits"> & {
-          sponsorMeets: (Tables<"sponsorMeets"> & {
-            userProfiles: Tables<"userProfiles">;
-          })[];
+          sponsorMeets: WithProfiles<Tables<"sponsorMeets">>[];
         };
       })[]
     >();
