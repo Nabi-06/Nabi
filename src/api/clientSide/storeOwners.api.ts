@@ -1,12 +1,11 @@
 import { supabase } from "@/supabase/client";
-import { Database } from "@/supabase/database.types";
+import { TablesInsert } from "@/supabase/database.types";
 
-const insertStoreOwner = async (
-  insertOwner: Database["public"]["Tables"]["storeOwners"]["Insert"]
-) => {
+const insertStoreOwner = async (insertOwner: TablesInsert<"storeOwners">) => {
   const { error, data } = await supabase
     .from("storeOwners")
     .insert(insertOwner);
+
   if (error) throw new Error(error.message);
 
   return data;
@@ -14,6 +13,7 @@ const insertStoreOwner = async (
 
 const getStoreByUserId = async (userId: string) => {
   const query = "*, storeDatas!storeOwners_storeId_fkey(*)";
+
   const { error, data } = await supabase
     .from("storeOwners")
     .select(query)
@@ -29,9 +29,14 @@ const checkIsStoreOwnerByUserId = async (userId: string) => {
     .from("storeOwners")
     .select()
     .eq("sponsorId", userId);
+
   if (error) throw new Error(error.message);
 
-  return data;
+  if (data.length !== 0) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const checkIsStoreOwnerByStoreId = async ({ storeId }: { storeId: string }) => {

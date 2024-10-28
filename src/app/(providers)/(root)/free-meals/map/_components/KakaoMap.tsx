@@ -159,12 +159,12 @@ function KakaoMap({
       const id = crypto.randomUUID();
       const title = "지도 로딩 실패";
       const content = "지도를 찾을 수 없습니다.\n홈페이지로 이동됩니다";
-      const status = "start";
+      const type = "fail";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       return router.replace("/");

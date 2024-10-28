@@ -3,26 +3,30 @@ import { supabase } from "@/supabase/client";
 const TABLE_ROOMS = "rooms";
 
 const getRoomsWithTargetUserByUserId = async (userId: string) => {
-  const selectQueryA = "*, userProfiles!rooms_userBId_fkey2(nickname, role)";
-  const selectQueryB = "*, userProfiles!rooms_userAId_fkey2(nickname, role)";
+  const selectQueryForeignUserA =
+    "*, userProfiles!rooms_userBId_fkey2(nickname, role)";
+  const selectQueryForeignB =
+    "*, userProfiles!rooms_userAId_fkey2(nickname, role)";
   const userAPromise = supabase
     .from(TABLE_ROOMS)
-    .select(selectQueryA)
+    .select(selectQueryForeignUserA)
     .eq("userAId", userId);
+
   const userBPromise = supabase
     .from(TABLE_ROOMS)
-    .select(selectQueryB)
+    .select(selectQueryForeignB)
     .eq("userBId", userId);
 
-  const [{ data: dataA }, { data: dataB }] = await Promise.all([
+  const [{ data: userAData }, { data: userBData }] = await Promise.all([
     userAPromise,
     userBPromise,
   ]);
 
   const result = [];
-  if (dataA && dataA.length !== 0) {
+
+  if (userAData && userAData.length !== 0) {
     result.push(
-      ...dataA.map((data) => {
+      ...userAData.map((data) => {
         const userProfile = data.userProfiles as unknown as {
           nickname: string;
           role: string;
@@ -41,9 +45,10 @@ const getRoomsWithTargetUserByUserId = async (userId: string) => {
       })
     );
   }
-  if (dataB && dataB.length !== 0) {
+
+  if (userBData && userBData.length !== 0) {
     result.push(
-      ...dataB.map((data) => {
+      ...userBData.map((data) => {
         const userProfile = data.userProfiles as unknown as {
           nickname: string;
           role: string;
@@ -74,14 +79,14 @@ const getRoomIdByUserIdAndTargetUserId = async ({
   targetUserId: string;
 }) => {
   const query = `and(userAId.eq.${userId},userBId.eq.${targetUserId}),and(userAId.eq.${targetUserId},userBId.eq.${userId})`;
-  const { error, data } = await supabase
+  const { error, data: room } = await supabase
     .from(TABLE_ROOMS)
     .select("roomId")
     .or(query)
     .single();
   if (error) throw new Error(error.message);
 
-  return data.roomId;
+  return room.roomId;
 };
 
 const roomsAPI = {

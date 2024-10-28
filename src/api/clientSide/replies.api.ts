@@ -1,24 +1,20 @@
 "use client";
 
 import { supabase } from "@/supabase/client";
-import { Database, Tables } from "@/supabase/database.types";
+import { Tables, TablesInsert } from "@/supabase/database.types";
+import { WithProfiles } from "@/types/profiles.types";
 
 const getRepliesByRecruitId = async (recruitId: string) => {
+  const query = "*, userProfiles!replies_recipientId_fkey(*)";
   const { data } = await supabase
     .from("replies")
-    .select("*, userProfiles!replies_recipientId_fkey(*)")
+    .select(query)
     .eq("recruitId", recruitId)
-    .returns<
-      (Tables<"replies"> & {
-        userProfiles: Tables<"userProfiles">;
-      })[]
-    >();
+    .returns<WithProfiles<Tables<"replies">>[]>();
   return data;
 };
 
-const createReply = async (
-  data: Database["public"]["Tables"]["replies"]["Insert"]
-) => {
+const createReply = async (data: TablesInsert<"replies">) => {
   const { error } = await supabase.from("replies").insert(data);
   if (error) throw new Error(error.message);
 };

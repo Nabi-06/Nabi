@@ -72,7 +72,7 @@ function NewRecruitForm() {
         id: crypto.randomUUID(),
         title: "봉사자 구인 글 작성 완료",
         content: "봉사자 구인 글 작성을 완료했습니다\n홈페이지로 이동합니다",
-        status: "running",
+        type: "success",
       };
       addToast(toast);
       router.push(`/`);
@@ -81,8 +81,14 @@ function NewRecruitForm() {
         exact: true,
       });
     },
-    onError: (e) => {
-      alert(e.message);
+    onError: () => {
+      const toast: ToastType = {
+        id: crypto.randomUUID(),
+        title: "봉사자 구인 글 작성 실패",
+        content: "봉사자 구인 글 작성을 실패했습니다",
+        type: "fail",
+      };
+      addToast(toast);
     },
   });
 

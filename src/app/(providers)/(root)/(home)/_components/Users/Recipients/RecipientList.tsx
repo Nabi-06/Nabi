@@ -23,16 +23,19 @@ function RecipientList({ page }: RecipientListProps) {
     <>
       {recipients && (
         <ul className="grid grid-cols-1 grid-rows-5 gap-y-2 mx-auto">
-          {recipients?.slice(startNum, endNum).map((recipient) => (
-            <li key={recipient.userId}>
-              <ProfileItem
-                className="m-auto"
-                nickname={recipient.nickname}
-                userId={recipient.userId}
-                profileImageUrl={recipient.profileImageUrl}
-              />
-            </li>
-          ))}
+          {recipients?.slice(startNum, endNum).map((recipient) => {
+            console.log(recipient);
+            return (
+              <li key={recipient.userId}>
+                <ProfileItem
+                  className="m-auto"
+                  nickname={recipient.nickname}
+                  userId={recipient.userId}
+                  profileImageUrl={recipient.profileImageUrl}
+                />
+              </li>
+            );
+          })}
         </ul>
       )}
     </>

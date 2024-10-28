@@ -9,6 +9,4 @@ export type EditProfileData = {
   bgImg?: File;
 };
 
-export type WithProfiles<T> = T & {
-  userProfiles: Tables<"userProfiles">;
-};
+export type WithProfiles<T> = Tables<"userProfiles"> & T;

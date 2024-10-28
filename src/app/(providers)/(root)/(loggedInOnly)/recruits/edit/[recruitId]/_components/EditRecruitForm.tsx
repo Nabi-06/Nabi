@@ -71,12 +71,12 @@ function EditRecruitForm({ recruitId }: EditRecruitFormProps) {
       const title = "봉사활동 구인글 수정 성공";
       const content =
         "봉사활동 구인글 수정을 완료하였습니다\n홈페이지로 이동됩니다";
-      const status = "start";
+      const type = "success";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       queryClient.invalidateQueries({

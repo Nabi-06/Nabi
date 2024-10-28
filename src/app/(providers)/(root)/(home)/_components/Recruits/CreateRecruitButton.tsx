@@ -10,7 +10,7 @@ function CreateRecruitButton() {
 
   return (
     <>
-      {currentUser?.role !== "recipient" && (
+      {currentUser?.role === "sponsor" && (
         <Link
           href="/recruits/new"
           className="w-full mb-5 grid place-items-center bg-white text-center py-3 text-[15px] font-paperlogy shadow-sm"

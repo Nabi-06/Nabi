@@ -5,6 +5,7 @@ import { ToastType } from "@/types/toast.types";
 import { useAuthStore } from "@/zustand/auth.store";
 import { useToastStore } from "@/zustand/toast.store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ApplyButtonSkeleton from "./components/ApplyButtonSkeleton";
 
 interface ApplyToSponsorButtonProps {
   recruitId: string;
@@ -34,10 +35,10 @@ function ApplyToSponsorButton({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sponsorMeets"] });
       const toast: ToastType = {
-        title: "신청 대기 중",
+        title: "신청 성공",
         content: "작성자가 승인을 하면 신청이 완료됩니다",
-        status: "running",
         id: crypto.randomUUID(),
+        type: "success",
       };
       addToast(toast);
     },
@@ -52,6 +53,7 @@ function ApplyToSponsorButton({
   );
 
   if (!userId) return null;
+  if (!sponsorMeets) return <ApplyButtonSkeleton />;
 
   const handleClickApplyButton = () => {
     const data = {

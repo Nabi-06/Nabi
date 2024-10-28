@@ -8,17 +8,18 @@ const getBillingKey = async (requestData: {
   price: number;
   recipientId: string;
 }) => {
-  const response = await serverClient.post("/issue-billing-key", requestData);
+  const { data } = await serverClient.post("/issue-billing-key", requestData);
 
-  const data = response.data;
   return data;
 };
 
 const getMyRegularSponsorships = async (userId: string) => {
-  const { data: myRegularSponsorships } = await supabase
+  const { data: myRegularSponsorships, error } = await supabase
     .from("regularSponsorship")
     .select()
     .eq("sponsorId", userId);
+
+  if (error) throw new Error(error.message);
 
   return myRegularSponsorships;
 };

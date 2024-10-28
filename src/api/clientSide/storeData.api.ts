@@ -1,5 +1,5 @@
 import { supabase } from "@/supabase/client";
-import { Database, Tables } from "@/supabase/database.types";
+import { Tables } from "@/supabase/database.types";
 import { LatLng } from "@/types/address.types";
 
 const getStoreDatasBySwLatLngAndNeLatLng = async ({
@@ -33,9 +33,7 @@ const getStoreDataByStoreId = async (storeId: string) => {
   return storeData;
 };
 
-const updateStoreData = async (
-  updateData: Database["public"]["Tables"]["storeDatas"]["Row"]
-) => {
+const updateStoreData = async (updateData: Tables<"storeDatas">) => {
   const { error, data } = await supabase
     .from("storeDatas")
     .update(updateData)

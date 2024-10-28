@@ -25,10 +25,10 @@ function Fund({ domain }: FundProps) {
           : "로그인을 하지 않아 후원기금 모금을 할 수 없습니다";
 
       const toast: ToastType = {
+        id: crypto.randomUUID(),
         title: "권한 부족",
         content,
-        status: "running",
-        id: crypto.randomUUID(),
+        type: "fail",
       };
 
       if (user?.role === "recipient") return addToast(toast);

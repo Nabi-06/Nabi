@@ -49,7 +49,7 @@ function LoggedInNavigation({ userId }: LoggedInNavigationProps) {
     const toast: ToastType = {
       title: "로그아웃 성공",
       content: "성공적으로 로그아웃되었습니다",
-      status: "start",
+      type: "success",
       id: crypto.randomUUID(),
     };
     addToast(toast);
@@ -88,7 +88,7 @@ function LoggedInNavigation({ userId }: LoggedInNavigationProps) {
             height={150}
             src={
               profile?.profileImageUrl ||
-              "https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/ProfileDefault.png"
+              "https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/NewProfileDefault.png"
             }
             alt="profile image"
             className="w-10 aspect-square object-cover rounded-lg"

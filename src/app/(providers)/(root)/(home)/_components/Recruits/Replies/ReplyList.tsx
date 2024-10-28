@@ -8,7 +8,7 @@ type ReplyListProps = {
 
 function ReplyList({ replies }: ReplyListProps) {
   return (
-    <ul className="mt-5 flex flex-col gap-y-3">
+    <ul className="flex flex-col gap-y-4">
       {replies.map((reply) => (
         <li key={reply.replyId}>
           <Reply reply={reply} />

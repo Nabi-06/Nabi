@@ -1,6 +1,6 @@
 import { supabase } from "@/supabase/client";
-import { Tables } from "@/supabase/database.types";
-import { Recruits } from "@/types/customDatabase";
+import { Tables, TablesInsert, TablesUpdate } from "@/supabase/database.types";
+import { WithProfiles } from "@/types/profiles.types";
 
 const deleteRecruitByRecruitId = async (recruitId: string) => {
   const { error } = await supabase
@@ -11,43 +11,49 @@ const deleteRecruitByRecruitId = async (recruitId: string) => {
   if (error) throw new Error(error.message);
 };
 
-const createRecruit = async (data: Recruits["Insert"]) => {
+const createRecruit = async (data: TablesInsert<"recruits">) => {
   const { data: recruitData, error } = await supabase
     .from("recruits")
     .insert(data)
     .select("*")
-    .returns<Recruits["Insert"]>()
+    .returns<TablesInsert<"recruits">>()
     .single();
+
   if (error) throw new Error(error.message);
 
   return recruitData;
 };
 
 const getRecruits = async () => {
-  const response = await supabase.from("recruits").select("*");
-  const data = response.data;
+  const { data, error } = await supabase
+    .from("recruits")
+    .select("*")
+    .returns<Tables<"recruits">[]>();
 
-  return data as Tables<"recruits">[];
+  if (error) throw new Error(error.message);
+
+  return data;
 };
 
 const getRecruit = async (recruitId: string) => {
-  const response = await supabase
+  const { data: recruit, error } = await supabase
     .from("recruits")
     .select("*")
     .eq("recruitId", recruitId)
     .single();
-  const recruit = response.data;
 
-  return recruit as Recruits["Row"];
+  if (error) throw new Error(error.message);
+
+  return recruit;
 };
 
 const getSortedRecruits = async () => {
-  const response = await supabase
+  const { data, error } = await supabase
     .from("recruits")
     .select("*")
     .order("createdAt", { ascending: false });
 
-  const data = response.data;
+  if (error) throw new Error(error.message);
 
   return data;
 };
@@ -55,20 +61,20 @@ const getSortedRecruits = async () => {
 const getSortedMyRecruits = async (userId: string) => {
   const query =
     "*, sponsorMeets(userId, status, userProfiles(*)), recipientMeets(userId, status, userProfiles(*))";
-  const response = await supabase
+  const { data: recruits, error } = await supabase
     .from("recruits")
     .select(query)
     .eq("authorId", userId)
     .order("createdAt", { ascending: false });
 
-  const recruits = response.data;
+  if (error) throw new Error(error.message);
 
   return recruits;
 };
 
 const editRecruit = async (
   recruitId: string,
-  data: Partial<Recruits["Update"]>
+  data: Partial<TablesUpdate<"recruits">>
 ) => {
   const { error } = await supabase
     .from("recruits")
@@ -91,6 +97,7 @@ const getGroupOfPageRecruits = async (page: number, offset: number) => {
         userProfiles: Tables<"userProfiles">;
       })[]
     >();
+
   if (error) throw new Error(error.message);
 
   return data;
@@ -105,7 +112,7 @@ const getInfiniteRecruitsByUserId = async (
   const meets = role === "sponsor" ? "sponsorMeets" : "recipientMeets";
   const query = `recruitId, recruits(*, userProfiles(*), replies(*, userProfiles(*)))`;
 
-  const { data: recruitsData } = await supabase
+  const { data: recruitsData, error } = await supabase
     .from(meets)
     .select(query)
     .eq("userId", userId)
@@ -115,14 +122,15 @@ const getInfiniteRecruitsByUserId = async (
     .returns<
       {
         recruitId: string;
-        recruits: Tables<"recruits"> & {
-          userProfiles: Tables<"userProfiles">;
-          replies: (Tables<"replies"> & {
-            userProfiles: Tables<"userProfiles">;
-          })[];
-        };
+        recruits: WithProfiles<
+          Tables<"recruits"> & {
+            replies: WithProfiles<Tables<"replies">>[];
+          }
+        >;
       }[]
     >();
+
+  if (error) throw new Error(error.message);
 
   const recruits = recruitsData?.map((data) => {
     return data.recruits;
@@ -134,20 +142,19 @@ const getInfiniteRecruitsByUserId = async (
 const getInfiniteRecruits = async (page: number) => {
   const query =
     "*, userProfiles(*), replies!replies_recruitId_fkey(*,userProfiles!replies_recipientId_fkey(*))";
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("recruits")
     .select(query)
     .order("createdAt", { ascending: false })
     .range(page * 5, page * 5 + 4)
     .returns<
-      (Tables<"recruits"> & {
-        userProfiles: Tables<"userProfiles">;
-      } & {
-        replies: (Tables<"replies"> & {
-          userProfiles: Tables<"userProfiles">;
-        })[];
+      (WithProfiles<Tables<"recruits">> & {
+        replies: WithProfiles<Tables<"replies">>[];
       })[]
     >();
+
+  if (error) throw new Error(error.message);
+
   return data;
 };
 

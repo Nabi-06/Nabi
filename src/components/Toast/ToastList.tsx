@@ -11,7 +11,12 @@ function ToastList() {
       {toastList.map((toast, index) => {
         return (
           <li key={index} className="mt-5">
-            <Toast toast={toast} duration={500} showTime={2000} />
+            <Toast
+              type={toast.type}
+              toast={toast}
+              duration={500}
+              showTime={2000}
+            />
           </li>
         );
       })}

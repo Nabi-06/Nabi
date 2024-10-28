@@ -5,7 +5,7 @@ import Image from "next/image";
 import { PropsWithChildren } from "react";
 import AnimeSection from "./AnimeSection";
 
-const thumbnailVariant = cva("", {
+const thumbnailVariant = cva(" ", {
   variants: {
     theme: {
       finance: "bg-orange-200",

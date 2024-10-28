@@ -132,9 +132,7 @@ const getRejectedRecipientAppliesWithProfileByRecruitId = async (
     .select(query)
     .eq("recruitId", recruitId)
     .eq("status", "rejected")
-    .returns<
-      (Tables<"recipientMeets"> & { userProfiles: Tables<"userProfiles"> })[]
-    >();
+    .returns<WithProfiles<Tables<"recipientMeets">>[]>();
 
   if (error) throw new Error(error.message);
 

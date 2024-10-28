@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { supabase } from "@/supabase/client";
-import { Tables } from "@/supabase/database.types";
-import { UserProfiles } from "@/types/customDatabase";
+import { Tables, TablesInsert } from "@/supabase/database.types";
 import { EditProfileData } from "@/types/profiles.types";
 import clientApi from "./api";
 
@@ -9,7 +8,9 @@ const TABLE_PROFILES = "userProfiles";
 const baseURL =
   "https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/";
 
-const insertProfile = async (insertProfileData: UserProfiles["Insert"]) => {
+const insertProfile = async (
+  insertProfileData: TablesInsert<"userProfiles">
+) => {
   const { data, error } = await supabase
     .from(TABLE_PROFILES)
     .insert(insertProfileData)
@@ -31,7 +32,7 @@ const getProfileByUserId = async (userId: string) => {
     .single();
 
   if (error) throw new Error(error.message);
-  const profile: UserProfiles["Row"] = data;
+  const profile: Tables<"userProfiles"> = data;
   return profile;
 };
 
@@ -73,15 +74,17 @@ const editProfile = async (editProfileData: EditProfileData) => {
 };
 
 const setPrimaryImage = async (userId: string, type: string) => {
-  type === "profile"
-    ? await supabase
-        .from(TABLE_PROFILES)
-        .update({ profileImageUrl: null })
-        .eq("userId", userId)
-    : await supabase
-        .from(TABLE_PROFILES)
-        .update({ bgImageUrl: null })
-        .eq("userId", userId);
+  if (type === "profile") {
+    await supabase
+      .from(TABLE_PROFILES)
+      .update({ profileImageUrl: null })
+      .eq("userId", userId);
+  } else {
+    await supabase
+      .from(TABLE_PROFILES)
+      .update({ bgImageUrl: null })
+      .eq("userId", userId);
+  }
   clientApi.storage.setPrimaryImage(userId, type);
 };
 
@@ -94,26 +97,29 @@ const getProfilesFilterByRoleAndSponsorShipCount = async (
     .select(query)
     .eq("role", role)
     .returns<
-      (Tables<"userProfiles"> & { sponsorShip: { count: number }[] })[]
+      (Tables<"userProfiles"> & {
+        sponsorShip: { count: number };
+      })[]
     >();
 
   if (error) throw new Error(error.message);
 
-  const orderedData: Omit<
-    (Tables<"userProfiles"> & { sponsorShip: { count: number }[] })[],
-    "sponsorShip"
-  > = bubbleSort(data!);
+  const orderedData: (Tables<"userProfiles"> & {
+    sponsorShip: { count: number };
+  })[] = bubbleSort(data!);
 
   return orderedData;
 };
 
 function bubbleSort(
-  arr: (Tables<"userProfiles"> & { sponsorShip: { count: number }[] })[]
+  arr: (Tables<"userProfiles"> & {
+    sponsorShip: { count: number };
+  })[]
 ) {
   const newArr = arr;
   for (let x = 0; x < newArr.length; x++) {
     for (let y = 1; y < newArr.length - x; y++) {
-      if (newArr[y - 1].sponsorShip[0].count > newArr[y].sponsorShip[0].count) {
+      if (newArr[y - 1].sponsorShip.count > newArr[y].sponsorShip.count) {
         [newArr[y - 1], newArr[y]] = [newArr[y], newArr[y - 1]];
       }
     }

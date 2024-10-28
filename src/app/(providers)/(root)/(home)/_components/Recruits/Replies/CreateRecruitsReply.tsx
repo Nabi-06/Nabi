@@ -3,9 +3,11 @@
 import clientApi from "@/api/clientSide/api";
 import Button from "@/components/Button/Button";
 import InputGroup from "@/components/Inputs/InputGroup";
-import { Database } from "@/supabase/database.types";
+import { TablesInsert } from "@/supabase/database.types";
 import { CustomFormEvent } from "@/types/formEvent.types";
+import { ToastType } from "@/types/toast.types";
 import { useAuthStore } from "@/zustand/auth.store";
+import { useToastStore } from "@/zustand/toast.store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ComponentProps } from "react";
@@ -20,6 +22,7 @@ function CreateRecruitsReply({ recruitId }: { recruitId?: string }) {
   const queryClient = useQueryClient();
   const user = useAuthStore((state) => state.currentUser);
   const userId = user?.userId;
+  const addToast = useToastStore((state) => state.addToast);
 
   const { data: recipients } = useQuery({
     queryKey: ["recipientMeets", { recruitId }],
@@ -29,14 +32,27 @@ function CreateRecruitsReply({ recruitId }: { recruitId?: string }) {
   const { mutate: createReply } = useMutation<
     unknown,
     Error,
-    Database["public"]["Tables"]["replies"]["Insert"]
+    TablesInsert<"replies">
   >({
     mutationFn: (data) => clientApi.replies.createReply(data),
     onSuccess: () => {
+      const toast: ToastType = {
+        id: crypto.randomUUID(),
+        title: "감사인사 작성 성공",
+        content: "감사인사 작성에 성공하였습니다",
+        type: "success",
+      };
+      addToast(toast);
       queryClient.invalidateQueries({ queryKey: ["recruits"] });
     },
-    onError: (e) => {
-      alert(e.message);
+    onError: () => {
+      const toast: ToastType = {
+        id: crypto.randomUUID(),
+        title: "감사인사 작성 실패",
+        content: "감사인사 작성에 실패하였습니다",
+        type: "fail",
+      };
+      addToast(toast);
     },
   });
 

@@ -3,11 +3,11 @@ import { Database, Tables } from "@/supabase/database.types";
 import { WithProfiles } from "@/types/profiles.types";
 
 const getRecruitIdByUserId = async (userId: string) => {
-  const response = await supabase
+  const { data: recruitIds } = await supabase
     .from("sponsorMeets")
     .select("recruitId")
     .eq("userId", userId);
-  const recruitIds = response.data;
+
   return recruitIds;
 };
 
@@ -20,6 +20,7 @@ const getRecentlyRecipients = async (sponsorId: string) => {
         *, userProfiles(*)
       )
   )`;
+
   const { data: recentlyRecipientsData, error } = await supabase
     .from("sponsorMeets")
     .select(query)
@@ -89,14 +90,14 @@ const getPendingSponsorAppliesWithProfileByRecruitId = async (
   recruitId: string
 ) => {
   const query = "*, userProfiles!sponsorMeets_userId_fkey(*)";
+
   const { data, error } = await supabase
     .from("sponsorMeets")
     .select(query)
     .eq("recruitId", recruitId)
     .eq("status", "pending")
-    .returns<
-      (Tables<"sponsorMeets"> & { userProfiles: Tables<"userProfiles"> })[]
-    >();
+    .returns<WithProfiles<Tables<"sponsorMeets">>[]>();
+
   if (error) throw new Error(error.message);
 
   return data;
@@ -107,17 +108,17 @@ const getApprovedSponsorAppliesWithProfileByRecruitIdAndUserId = async (
   userId: string
 ) => {
   const query = "*, userProfiles!sponsorMeets_userId_fkey(*)";
+
   const { data, error } = await supabase
     .from("sponsorMeets")
     .select(query)
     .eq("recruitId", recruitId)
     .eq("status", "approved")
     .neq("userId", userId)
-    .returns<
-      (Tables<"sponsorMeets"> & { userProfiles: Tables<"userProfiles"> })[]
-    >();
+    .returns<WithProfiles<Tables<"sponsorMeets">>[]>();
 
   if (error) throw new Error(error.message);
+
   return data;
 };
 
@@ -125,14 +126,13 @@ const getRejectedSponsorAppliesWithProfileByRecruitId = async (
   recruitId: string
 ) => {
   const query = "*, userProfiles!sponsorMeets_userId_fkey(*)";
+
   const { data, error } = await supabase
     .from("sponsorMeets")
     .select(query)
     .eq("recruitId", recruitId)
     .eq("status", "rejected")
-    .returns<
-      (Tables<"sponsorMeets"> & { userProfiles: Tables<"userProfiles"> })[]
-    >();
+    .returns<WithProfiles<Tables<"sponsorMeets">>[]>();
 
   if (error) throw new Error(error.message);
 

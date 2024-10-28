@@ -5,8 +5,9 @@ import { useModalStore } from "@/zustand/modal.store";
 import Link from "next/link";
 import SelectRoleModal from "../Modals/SelectRoleModal";
 import LoggedInNavigation from "./LoggedInNavigation";
+import HeaderNavigationSkeleton from "./components/NavigationSkeleton";
 
-function Navigation() {
+function HeaderAuthMenu() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const authInitialized = useAuthStore((state) => state.isAuthInitialized);
   const user = useAuthStore((state) => state.currentUser);
@@ -14,6 +15,7 @@ function Navigation() {
   const handleClickSignUp = () => {
     setActiveModal(<SelectRoleModal />);
   };
+
   return (
     <nav>
       <ul className="flex gap-x-5 items-center justify-center">
@@ -30,10 +32,12 @@ function Navigation() {
               </li>
             </>
           )
-        ) : null}
+        ) : (
+          <HeaderNavigationSkeleton />
+        )}
       </ul>
     </nav>
   );
 }
 
-export default Navigation;
+export default HeaderAuthMenu;

@@ -43,12 +43,12 @@ function LogInPage() {
       const id = crypto.randomUUID();
       const title = "로그인 성공";
       const content = "로그인에 성공하였습니다";
-      const status = "start";
+      const type = "success";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       router.replace("/");
@@ -58,6 +58,17 @@ function LogInPage() {
         ...prevErrMsgs,
         global: "로그인에 실패하였습니다",
       }));
+      const id = crypto.randomUUID();
+      const title = "로그인 실패";
+      const content = "로그인에 실패하였습니다";
+      const type = "fail";
+      const toast: ToastType = {
+        id,
+        title,
+        content,
+        type,
+      };
+      addToast(toast);
       console.log("error: ", arg);
     },
   });

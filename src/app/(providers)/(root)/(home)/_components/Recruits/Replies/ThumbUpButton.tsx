@@ -68,8 +68,8 @@ function ThumbUpButton({ recruitId }: ThumbsUpProps) {
       const toast: ToastType = {
         title: "좋아요 실패",
         content: "로그인이 되지 않아 좋아요를 누를 수 없습니다.",
-        status: "running",
         id: crypto.randomUUID(),
+        type: "fail",
       };
       return addToast(toast);
     }

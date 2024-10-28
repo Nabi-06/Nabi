@@ -61,12 +61,12 @@ function SignUpPage({ searchParams: { role } }: SignUpPageProps) {
       const id = crypto.randomUUID();
       const title = "회원가입 실패";
       const content = "회원가입에 실패하였습니다";
-      const status = "start";
+      const type = "fail";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       console.log("sign up error: ", arg);
@@ -86,12 +86,12 @@ function SignUpPage({ searchParams: { role } }: SignUpPageProps) {
       const id = crypto.randomUUID();
       const title = "회원가입 성공";
       const content = "회원가입에 성공하였습니다";
-      const status = "start";
+      const type = "success";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       router.replace("/");
@@ -100,12 +100,12 @@ function SignUpPage({ searchParams: { role } }: SignUpPageProps) {
       const id = crypto.randomUUID();
       const title = "회원가입 실패";
       const content = "회원가입에 실패하였습니다";
-      const status = "start";
+      const type = "fail";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
       console.log("insert profile error : ", arg);

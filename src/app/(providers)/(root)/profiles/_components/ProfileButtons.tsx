@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ProfileEditModal from "./Modals/ProfileEditModal";
 import RegularSponsorshipModal from "./Modals/RegularSponsorshipModal";
+import ProfileDetailButtonsSkeleton from "./ProfileDetailButtonsSkeleton";
 
 interface ProfileButtonsProps {
   showUserId: string;
@@ -62,7 +63,9 @@ function ProfileButtons({ showUserId, profile }: ProfileButtonsProps) {
   const handleClickStopRegularSponsorship = () => {
     stopRegularSponsorShip();
   };
-  return (
+  return !user ? (
+    <ProfileDetailButtonsSkeleton />
+  ) : (
     <article className="self-center -mt-5 flex gap-x-3">
       {user?.userId === profile.userId ? (
         <Button

@@ -5,8 +5,10 @@ import ButtonGroup from "@/components/Button/ButtonGroup";
 import InputGroup from "@/components/Inputs/InputGroup";
 import { TablesInsert } from "@/supabase/database.types";
 import { CustomFormEvent } from "@/types/formEvent.types";
+import { ToastType } from "@/types/toast.types";
 import { useAuthStore } from "@/zustand/auth.store";
 import { useModalStore } from "@/zustand/modal.store";
+import { useToastStore } from "@/zustand/toast.store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { ComponentProps, useState } from "react";
@@ -37,6 +39,7 @@ function CreateFreeMealForm() {
   const [errorMsgs, setErrorMsgs] = useState<InitialErrMsgs>(initialErrMsgs);
   const sponsor = useAuthStore((state) => state.currentUser);
   const setActiveModal = useModalStore((state) => state.setActiveModal);
+  const addToast = useToastStore((state) => state.addToast);
 
   const { data: stores, isLoading } = useQuery({
     queryKey: ["storeOwners", { sponsorId: sponsor?.userId }],
@@ -51,10 +54,24 @@ function CreateFreeMealForm() {
     onSuccess: (...arg) => {
       queryClient.invalidateQueries({ queryKey: ["freeMeals"] });
       console.log("success: ", arg);
+      const toast: ToastType = {
+        id: crypto.randomUUID(),
+        title: "무상식사 공지 업로드 성공",
+        content: "무상식사 공지가 업로드에 성공하였습니다",
+        type: "success",
+      };
+      addToast(toast);
       setActiveModal(null);
     },
     onError: (...arg) => {
       console.log("error: ", arg);
+      const toast: ToastType = {
+        id: crypto.randomUUID(),
+        title: "무상식사 공지 업로드 실패",
+        content: "무상식사 공지가 업로드에 실패하였습니다",
+        type: "fail",
+      };
+      addToast(toast);
     },
   });
 

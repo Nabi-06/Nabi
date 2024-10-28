@@ -50,12 +50,12 @@ function StoreDetailButtons({
       const id = crypto.randomUUID();
       const title = "새로운 점주 등록";
       const content = "점주 등록을 완료하였습니다";
-      const status = "start";
+      const type = "success";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
     },
@@ -71,12 +71,12 @@ function StoreDetailButtons({
       const id = crypto.randomUUID();
       const title = "점주 해제";
       const content = "점주 해제를 완료하였습니다";
-      const status = "start";
+      const type = "success";
       const toast: ToastType = {
         id,
         title,
         content,
-        status,
+        type,
       };
       addToast(toast);
     },

@@ -4,6 +4,7 @@ import clientApi from "@/api/clientSide/api";
 import ProfileItem from "@/components/ProfileItem/ProfileItem";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import UsersSkeleton from "../components/UsersSkeleton";
 
 function Sponsors() {
   const { data: sponsors, isLoading } = useQuery({
@@ -12,11 +13,11 @@ function Sponsors() {
       clientApi.profiles.getProfilesFilterByRoleAndSponsorShipCount("sponsor"),
   });
 
-  if (isLoading) return <span>데이터 불러오는 중 ...</span>;
+  if (isLoading) return <UsersSkeleton />;
 
   return (
-    <article className="bg-white h-[320px] px-6 pt-5 flex flex-col gap-y-5 rounded-lg shadow-sm">
-      <h2 className="flex items-center gap-x-2 text-center mx-auto font-semibold">
+    <article className="bg-white px-5 py-7 flex flex-col gap-y-6 rounded-lg border">
+      <h2 className="flex items-center gap-x-2 font-semibold">
         <Image
           width={100}
           height={100}
@@ -24,9 +25,10 @@ function Sponsors() {
           src="https://gxoibjaejbmathfpztjt.supabase.co/storage/v1/object/public/icons/Crown.png?t=2024-10-15T23%3A41%3A11.949Z"
           alt="hot icon"
         />
-        활동률이 높은 후원자
+        후원 활동이 활발한 후원자들
       </h2>
-      <ul className="grid grid-cols-1 grid-rows-5 gap-y-2 mx-auto">
+
+      <ul className="grid grid-cols-1 gap-y-3">
         {sponsors!.slice(0, 5).map((sponsor) => {
           return (
             <li key={sponsor.userId}>

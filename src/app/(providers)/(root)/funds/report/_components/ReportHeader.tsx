@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import Container from "@/components/Container/Container";
@@ -59,6 +60,7 @@ function ReportHeader() {
       reportElment.removeEventListener("scroll", onScroll);
     };
   }, []);
+
   return (
     <>
       <header className="h-16 w-screen bg-white fixed top-0 left-0 z-20">
