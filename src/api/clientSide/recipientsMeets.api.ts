@@ -23,7 +23,18 @@ const getRecentlySponsors = async (userId: string) => {
 
   if (error) throw new Error(error.message);
 
-  return recentlySponsorsData;
+  const sponsorMeets = recentlySponsorsData
+    ?.flatMap((recentlySponsor) => recentlySponsor.recruits.sponsorMeets || [])
+    .filter((approvedMeet) => approvedMeet.status === "approved")
+    .filter(
+      (approvedMeet, index, callback) =>
+        index ===
+        callback.findIndex(
+          (t) => t.userProfiles.userId === approvedMeet.userProfiles.userId
+        )
+    );
+
+  return sponsorMeets;
 };
 
 const approveRecipient = async (userId: string, recruitId: string) => {

@@ -53,30 +53,6 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
     enabled: !!profile.role,
   });
 
-  //후원자가 후원한 아동 목록 ( 후원한 아동만, 아동 중복 제거)
-  const recipientMeets = recentlyRecipients
-    ?.flatMap((recentlyRecipient) => recentlyRecipient.recruits.recipientMeets)
-    .filter((approvedMeet) => approvedMeet.status === "approved")
-    .filter(
-      (approvedMeet, index, callback) =>
-        index ===
-        callback.findIndex(
-          (t) => t.userProfiles.userId === approvedMeet.userProfiles.userId
-        )
-    );
-
-  //후원아동이 후원받은 후원자 목록 ( 후원한 후원자만, 후원자 중복 제거)
-  const sponsorMeets = recentlySponsors
-    ?.flatMap((recentlySponsor) => recentlySponsor.recruits.sponsorMeets)
-    .filter((approvedMeet) => approvedMeet.status === "approved")
-    .filter(
-      (approvedMeet, index, callback) =>
-        index ===
-        callback.findIndex(
-          (t) => t.userProfiles.userId === approvedMeet.userProfiles.userId
-        )
-    );
-
   return (
     <div className="flex flex-col grow gap-y-4 peer">
       {regularSpons && regularSpons.length !== 0 && (
@@ -141,15 +117,15 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
               </h3>
               <ul className="flex flex-col gap-y-2 pl-9">
                 {recentlyRecipients &&
-                  recipientMeets?.map((recentlyData, idx) => {
-                    const recipient = recentlyData.userProfiles;
+                  recentlyRecipients?.map((recentlyRecipient, idx) => {
+                    const recipientProfiles = recentlyRecipient.userProfiles;
                     return (
                       <li key={idx} className="">
                         <ProfileItem
                           className="m-auto"
-                          nickname={recipient.nickname}
-                          userId={recipient.userId}
-                          profileImageUrl={recipient.profileImageUrl}
+                          nickname={recipientProfiles.nickname}
+                          userId={recipientProfiles.userId}
+                          profileImageUrl={recipientProfiles.profileImageUrl}
                         />
                       </li>
                     );
@@ -163,15 +139,15 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
             <h3 className="mb-4 font-bold">최근 후원자</h3>
             <ul>
               {recentlySponsors?.length !== 0 ? (
-                sponsorMeets?.map((sponsorMeets, idx) => {
-                  const sponsor = sponsorMeets.userProfiles;
+                recentlySponsors?.map((recentlySponsor, idx) => {
+                  const sponsorProfiles = recentlySponsor.userProfiles;
                   return (
                     <li key={idx} className="">
                       <ProfileItem
                         className="m-auto"
-                        nickname={sponsor.nickname}
-                        userId={sponsor.userId}
-                        profileImageUrl={sponsor.profileImageUrl}
+                        nickname={sponsorProfiles.nickname}
+                        userId={sponsorProfiles.userId}
+                        profileImageUrl={sponsorProfiles.profileImageUrl}
                       />
                     </li>
                   );
