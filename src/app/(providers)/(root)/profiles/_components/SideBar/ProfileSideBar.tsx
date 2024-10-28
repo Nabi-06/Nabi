@@ -65,6 +65,18 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
         )
     );
 
+  //후원아동이 후원받은 후원자 목록 ( 후원한 후원자만, 후원자 중복 제거)
+  const sponsorMeets = recentlySponsors
+    ?.flatMap((recentlySponsor) => recentlySponsor.recruits.sponsorMeets)
+    .filter((approvedMeet) => approvedMeet.status === "approved")
+    .filter(
+      (approvedMeet, index, callback) =>
+        index ===
+        callback.findIndex(
+          (t) => t.userProfiles.userId === approvedMeet.userProfiles.userId
+        )
+    );
+
   return (
     <div className="flex flex-col grow gap-y-4 peer">
       {regularSpons && regularSpons.length !== 0 && (
@@ -149,33 +161,25 @@ function ProfileSideBar({ profile }: ProfileSideBarProps) {
           // 다른 후원아동의 프로필
           <div className="bg-white rounded-lg shadow-md py-4 px-5">
             <h3 className="mb-4 font-bold">최근 후원자</h3>
-            {recentlySponsors && recentlySponsors.length !== 0 ? (
-              <ul>
-                {recentlySponsors.map((recentlyData) => {
-                  const sponsors = recentlyData.recruits.recipientMeets;
-                  return sponsors ? (
-                    sponsors?.map((sponsorData) => {
-                      const sponsor = sponsorData.userProfiles;
-                      console.log("sponsor: ", sponsor);
-                      return (
-                        <li key={sponsor.userId}>
-                          <ProfileItem
-                            className="m-auto"
-                            nickname={sponsor.nickname}
-                            userId={sponsor.userId}
-                            profileImageUrl={sponsor.profileImageUrl}
-                          />
-                        </li>
-                      );
-                    })
-                  ) : (
-                    <span className="text-sm">후원자가 없습니다</span>
+            <ul>
+              {recentlySponsors?.length !== 0 ? (
+                sponsorMeets?.map((sponsorMeets, idx) => {
+                  const sponsor = sponsorMeets.userProfiles;
+                  return (
+                    <li key={idx} className="">
+                      <ProfileItem
+                        className="m-auto"
+                        nickname={sponsor.nickname}
+                        userId={sponsor.userId}
+                        profileImageUrl={sponsor.profileImageUrl}
+                      />
+                    </li>
                   );
-                })}
-              </ul>
-            ) : (
-              <span className="text-sm">후원자가 없습니다</span>
-            )}
+                })
+              ) : (
+                <li>최근 후원자가 없습니다.</li>
+              )}
+            </ul>
           </div>
         )}
       </article>

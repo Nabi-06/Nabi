@@ -13,15 +13,13 @@ const getRecentlySponsors = async (userId: string) => {
     .order("createdAt", { ascending: false })
     .limit(5)
     .returns<
-      Tables<"recipientMeets"> &
-        {
-          recruits: Tables<"recruits"> & {
-            recipientMeets: Tables<"sponsorMeets"> &
-              {
-                userProfiles: Tables<"userProfiles">;
-              }[];
-          };
-        }[]
+      (Tables<"recipientMeets"> & {
+        recruits: Tables<"recruits"> & {
+          sponsorMeets: (Tables<"sponsorMeets"> & {
+            userProfiles: Tables<"userProfiles">;
+          })[];
+        };
+      })[]
     >();
 
   if (error) throw new Error(error.message);
