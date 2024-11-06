@@ -49,42 +49,42 @@
 
 ### 📝 주요 기능
 
-#### 카카오맵 API와 공공데이터를 결합한 아동급식카드 가맹점 지도 검색 및 무상식사 지원 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D%EC%B9%B4%EB%93%9C-%EA%B0%80%EB%A7%B9%EC%A0%90-%EC%A7%80%EB%8F%84-%EA%B2%80%EC%83%89-%EB%B0%8F-%EB%AC%B4%EC%83%81%EC%8B%9D%EC%82%AC-%EC%A7%80%EC%9B%90-WIKI, "WIKI 링크")
+#### 카카오맵 API와 공공데이터를 결합한 아동급식카드 가맹점 지도 검색 및 무상식사 지원 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D%EC%B9%B4%EB%93%9C-%EA%B0%80%EB%A7%B9%EC%A0%90-%EC%A7%80%EB%8F%84-%EA%B2%80%EC%83%89-%EB%B0%8F-%EB%AC%B4%EC%83%81%EC%8B%9D%EC%82%AC-%EC%A7%80%EC%9B%90-WIKI)
 
   - Kakao Map API 활용한 지도 표시 및 장소 검색
   - 서울시 아동급식카드 가맹점 정보 데이터를 기반으로 지도에 매장 표시
   - 가맹점 점주 등록 및 해제
   - 점주의 무상식사 제공 글 생성
 
-#### 토스페이먼츠 API를 활용한 정기 후원 및 후원기금 모금 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%86%A0%EC%8A%A4%ED%8E%98%EC%9D%B4%EB%A8%BC%EC%B8%A0-API-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B2%B0%EC%A0%9C%EA%B8%B0%EB%8A%A5-WIKI, "WIKI 링크")
+#### 토스페이먼츠 API를 활용한 정기 후원 및 후원기금 모금 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%86%A0%EC%8A%A4%ED%8E%98%EC%9D%B4%EB%A8%BC%EC%B8%A0-API-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B2%B0%EC%A0%9C%EA%B8%B0%EB%8A%A5-WIKI)
 
   - Tosspayments 정기결제 API를 활용한 기능 구현
   - Express를 활용한 백엔드 구현 및 Axios를 통한 HTTP 통신
   - node-cron 패키지로 정기적인 결제 구현 (매달 1일)
   - Tosspayments 결제위젯 API를 활용한 후원기금 모금 결제창 구현
 
-#### Socket.io를 활용한 유저 간 실시간 채팅 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%9C%A0%EC%A0%80-%EA%B0%84-%EC%B1%84%ED%8C%85-WIKI, "WIKI 링크")
+#### Socket.io를 활용한 유저 간 실시간 채팅 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%9C%A0%EC%A0%80-%EA%B0%84-%EC%B1%84%ED%8C%85-WIKI)
 
   - Socket.io를 활용한 채팅 기능 구현
   - 채팅내역 백엔드에서 실시간 데이터 처리
 
-#### Chart.js를 활용한 후원 리포트 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%9B%84%EC%9B%90-%EB%A6%AC%ED%8F%AC%ED%8A%B8-WIKI, "WIKI 링크")
+#### Chart.js를 활용한 후원 리포트 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%9B%84%EC%9B%90-%EB%A6%AC%ED%8F%AC%ED%8A%B8-WIKI)
 
   - Chart.js를 활용한 수입, 지출, 후원내역 등 차트 구현
 
 
 ### 📝 세부 기능
 
-#### zustand를 활용한 로그인 상태 관리 (로그인 / 회원가입) [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8---%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-WIKI, "WIKI 링크")
+#### zustand를 활용한 로그인 상태 관리 (로그인 / 회원가입) [WIKI 링크]([https://github.com/Nabi-06/Nabi/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8---%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-WIKI](https://github.com/Nabi-06/Nabi/wiki/%EB%A1%9C%EA%B7%B8%EC%9D%B8---%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-WIKI))
 
   - zustand를 활용해 전역적으로 유저 데이터와 로그인 여부를 관리
 
-#### 컴포넌트의 생애주기를 활용한 토스트 구현 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%86%A0%EC%8A%A4%ED%8A%B8-WIKI, "WIKI 링크")
+#### 컴포넌트의 생애주기를 활용한 토스트 구현 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%ED%86%A0%EC%8A%A4%ED%8A%B8-WIKI)
 
   - zustand를 활용한 전역적으로 토스트 목록 관리
   - 컴포넌트의 생애주기를 활용한 토스트 생성 및 삭제
 
-#### supabase의 realtime을 활용한 알림 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%95%8C%EB%A6%BC-WIKI, "WIKI 링크")
+#### supabase의 realtime을 활용한 알림 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EC%95%8C%EB%A6%BC-WIKI)
 
   - Supabase의 realtime 기능을 활용한 푸쉬알림 기능 구현
   - 알림 이벤트 목록 
@@ -93,7 +93,7 @@
     - 정기 결제 알림 (후원자)
     - 정기 결연 등록 알림
 
-#### react-spring을 활용한 로딩 화면 애니메이션 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EB%A1%9C%EB%94%A9-%ED%99%94%EB%A9%B4-WIKI, "WIKI 링크")
+#### react-spring을 활용한 로딩 화면 애니메이션 [WIKI 링크](https://github.com/Nabi-06/Nabi/wiki/%EB%A1%9C%EB%94%A9-%ED%99%94%EB%A9%B4-WIKI)
 
   - react-spring를 활용한 나비 애니메이션 구현
   - next.js의 loading.tsx로 로딩화면 구현
