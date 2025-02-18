@@ -1,5 +1,4 @@
 # <img src="https://github.com/Nabi-06/Nabi/blob/develop/src/app/favicon.ico" width=25 height=25 alt="nabi logo" /> Nabi
-[나비 서비스 바로가기](https://nabi-psi.vercel.app, "나비 서비스")
 
 나비는 경제적으로 어려움을 겪고 있는 아동과 후원자들을 연결하여 따뜻한 사회적 지원을 가능하게 하는 웹 서비스입니다. 나비는 아동급식카드 가맹점 위치 기반 검색, 후원아동을 위한 봉사자 모집과 커뮤니티 서비스, 정기 결연 등 다양한 후원자와 후원아동을 위한 서비스을 제공하여 아동과 후원자의 소통을 돕습니다.
 
